@@ -1,0 +1,40 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+    <div id="PageTitle">招考资讯导航</div>
+    <div>
+    	<form action="<{:U('content/ZhaokaoSubmit')}>" method="post">
+    		<input type="hidden" name='id' value="<{$id}>">
+    		<input type="hidden" name="type" value="<{$type}>">
+	    	<table>
+	    		<tr>
+	    			<th>名称</th>
+	    			<th>层级</th>
+	    			<th>排序</th>
+					<th>上线</th>
+	    		</tr>
+				<tr>	
+					<td><input type="text" name="name" value="<?php echo empty($data)?'':$data['name'];?>"></td>
+					<td width="150px" style="text-align: center;">
+						<?php if ($type=='1'): ?>
+							顶级
+						<?php else: ?>	
+							<select name="level">
+								<?php foreach ($level as $key => $value): ?>
+									<option value="<{$value.id}>"><{$value.name}></option>
+								<?php endforeach ?>
+							</select>
+						<?php endif ?>
+						
+					</td>
+					<td>
+						<input type="number" name="sort" value="<?php echo empty($data)?'50':$data['sort'];?>">
+					</td>
+					<td>否<input type="radio"checked <?php echo $data['is_on']=='0'?'checked':'';?> name="is_on" value="0">&nbsp;&nbsp;&nbsp;是<input type="radio" <?php echo $data['is_on']=='1'?'checked':'';?> name="is_on" value="1"> </td>
+				</tr>
+				<tr>
+					<td colspan=3><button>提交</button></td>
+				</tr>
+	    	</table>
+    	</form>
+    </div>
+</block>

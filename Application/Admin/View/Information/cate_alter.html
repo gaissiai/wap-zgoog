@@ -1,0 +1,38 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+	<script>
+		<?php if(!empty($_COOKIE['hint'])){
+	        echo 'alert("'.$_COOKIE['hint'].'")';
+	        cookie('hint',null);
+	    }?>
+	</script>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>     
+    <div id="PageTitle">消息接收人</div>
+    <div>
+	<table cellspacing="0" cellpadding="3" rules="cols" id="ContentPlaceHolder1_GridViewProductCategoryList" style="color:Black;background-color:White;border-color:#999999;border-width:1px;border-style:Solid;width:60%;border-collapse:collapse;">
+		<tbody>
+			<tr style="color:White;background-color:Black;font-weight:bold;">
+			<th>用户名称</th>
+			<th>用户编号</th>
+			<th>用户是否已读</th>
+			<th>用户是否删除</th>
+			</tr>
+		</tbody>
+		<tbody>
+			<volist name='list' id='vl' key='k'>
+				<tr <?php echo ($k%2==0)?'style="background:#ddd"':'';?>>
+					<td><{$vl.contactname}></td>
+					<td><{$vl.memberno}></td>
+					<td><?php echo $vl['isread']=='1'?'是':'否';?></td>
+					<td><?php echo $vl['isdelete']=='1'?'是':'否';?></td>
+				</tr>
+			</volist>
+			<?php if($page != "<div>    </div>"): ?>
+				<tr>
+					<td colspan=6><div id='page' style='text-align:right'><{$page}></div></td>
+				</tr>
+			<?php endif;?>
+		</tbody>
+	</table>
+</block>

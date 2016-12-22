@@ -1,0 +1,53 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+	<style>
+		.uplode{
+			width: 80px;
+			height: 25px;
+			margin-top: 20px;
+		}
+		.disnone{
+			display: none;
+		}
+	</style>
+	<script>
+	    <?php if(!empty($_COOKIE['hint'])){
+	        echo 'alert("'.$_COOKIE['hint'].'")';
+	        cookie('hint',null);
+	    }?>
+	</script>
+    
+    <div id="PageTitle">积分赠送消息列表</div>
+    
+	<table cellspacing="0" cellpadding="3" rules="cols" style="color:Black;background-color:White;border-color:#999999;border-width:1px;border-style:Solid;width:80%;border-collapse:collapse;">
+		<tbody>
+			<tr style="color:White;background-color:Black;font-weight:bold;" >
+				<th scope="col">id</th>
+				<th scope="col">赠送人</th>
+				<th scope="col">赠送人手机号</th>
+				<th scope="col">被赠送人</th>
+				<th scope="col">被赠送人手机号</th>
+				<th scope="col">备注内容</th>
+				<th scope="col">赠送值</th>
+				<th scope="col">发送时间</th>
+			</tr>
+			<volist name="list" id="vo" key='k'>
+				<tr <if condition="($k%2 neq '')">class='true'</if> <if condition="($vo['delete'] eq '1')">style='color:#999'</if>>
+					<td><{$vo.id}></td>
+					<td><{$vo.membername}></td>
+					<td><{$vo.memberphone}></td>
+					<td><{$vo.bemembername}></td>
+					<td><{$vo.bememberphone}></td>
+					<td><?php echo empty($vo['leaveword'])?'无备注消息':$vo['leaveword'];?></td>
+					<td><{$vo.givemunber}></td>
+					<td><{$vo.givetime}></td>
+				</tr>
+			</volist>
+			<?php if($page != "<div>    </div>"): ?>
+				<tr>
+					<td colspan=14><div id='page' style='text-align:right'><{$page}></div></td>
+				</tr>
+			<?php endif;?>
+		</tbody>
+	</table>
+</block>

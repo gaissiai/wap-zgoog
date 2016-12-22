@@ -1,0 +1,63 @@
+<extend name="Inherit/index" />
+<block name="content">
+	<div class='caption'>
+		<div class="houtui">
+			<p><</p>
+		</div>
+		<p class='shenglue'><{$title}></p>
+	</div>
+
+	<div class="content">
+		<div class='content_t'>
+			<p><{$daohan}></p>
+		</div>
+
+		<?php foreach ($data as $key => $value): ?>
+			<div class="teacher_v">
+				<div class="teacher_photo">
+					<img src="__PUBLIC__/<{$value.pic}>">
+				</div>
+				<div class="teacher_text1">
+					<div class="teacher_text1_v1">
+						<p><{$value.name}></p>
+						<span>主讲科目：</span>
+						<p><{$value.subject}></p>
+					</div>
+					<div class="teacher_text1_v3">
+						<div class="text_daohan1">
+							<p>资历</p>
+						</div>
+						
+						<div class="text_daohan2">
+							<p class="text_xz90"> > </p>
+						</div>
+						
+					</div>
+					<div class="teacher_text1_v2 none_v" >
+						<p><{$value.aptitude}></p>
+					</div>
+				</div>
+			</div>
+		<?php endforeach ?>
+		
+
+		
+
+		
+	</div>
+
+<script type="text/javascript">
+	$('.text_daohan2').click(function(){
+		var _this=$(this).parent().next();
+		if (_this.is('.none_v')) {
+			_this.slideDown().toggleClass('none_v');
+			$(this).children().removeClass('text_xz90').addClass('text_xz270');
+		}else{
+			_this.slideUp().toggleClass('none_v');
+			$(this).children().removeClass('text_xz270').addClass('text_xz90');
+		}
+		
+	})
+</script>
+
+</block>

@@ -1,0 +1,125 @@
+<extend name="Inherit/index" />
+<block name="content">
+	<div class='caption'>
+		<div class="houtui">
+			<p><</p>
+		</div>
+		<p class='shenglue'><{$title}></p>
+	</div>
+
+	<div class="content">
+		<div class='content_t'>
+			<p><{$daohan}></p>
+		</div>
+		<div class="school_v">
+			<div class="school_cont1">
+				<p class="school_v1">广西分部</p>
+				<p class="school_v2 text_xz90"> > </p>
+			</div>
+			
+			<div class='school_cont2 none_v'>
+				<div class="school_text">
+					<p><div>地址:</div>海淀区花园路7号新时代大厦一层</p>
+				</div>
+				<div class="school_text">
+					<p><div>电话:</div>4000101568</p>
+				</div>
+				<div class="school_text">
+					<p><div>联系QQ:</div>90721433</p>
+				</div>
+				<div class="school_text">
+					<p><div>微信:</div></p>
+					<img src="__PUBLIC__/Home/img/2wm.png">
+				</div>
+			</div>
+		</div>
+
+		<div class="school_v">
+			<div class="school_cont1">
+				<p class="school_v1">北京分部</p>
+				<p class="school_v2 text_xz90"> > </p>
+			</div>
+			
+			<div class='school_cont2 none_v'>
+				<div class="school_text">
+					<p><div>地址:</div>海淀区花园路7号新时代大厦一层</p>
+				</div>
+				<div class="school_text">
+					<p><div>电话:</div>4000101568</p>
+				</div>
+				<div class="school_text">
+					<p><div>联系QQ:</div>90721433</p>
+				</div>
+				<div class="school_text">
+					<p><div>微信:</div></p>
+					<img src="__PUBLIC__/Home/img/2wm.png">
+				</div>
+			</div>
+		</div>
+
+		<div class="school_v">
+			<div class="school_cont1">
+				<p class="school_v1">广东分部</p>
+				<p class="school_v2 text_xz90"> > </p>
+			</div>
+			
+			<div class='school_cont2 none_v'>
+				<div class="school_text">
+					<p><div>地址:</div>海淀区花园路7号新时代大厦一层</p>
+				</div>
+				<div class="school_text">
+					<p><div>电话:</div>4000101568</p>
+				</div>
+				<div class="school_text">
+					<p><div>联系QQ:</div>90721433</p>
+				</div>
+				<div class="school_text">
+					<p><div>微信:</div></p>
+					<img src="__PUBLIC__/Home/img/2wm.png">
+				</div>
+			</div>
+		</div>
+
+		<div class="school_v">
+			<div class="school_cont1">
+				<p class="school_v1">福建分部</p>
+				<p class="school_v2 text_xz90"> > </p>
+			</div>
+			
+			<div class='school_cont2 none_v'>
+				<div class="school_text">
+					<p><div>地址:</div>海淀区花园路7号新时代大厦一层</p>
+				</div>
+				<div class="school_text">
+					<p><div>电话:</div>4000101568</p>
+				</div>
+				<div class="school_text">
+					<p><div>联系QQ:</div>90721433</p>
+				</div>
+				<div class="school_text">
+					<p><div>微信:</div></p>
+					<img src="__PUBLIC__/Home/img/2wm.png">
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+
+
+<script type="text/javascript">
+	$('.school_cont1').click(function(){
+		var _this=$(this).next();
+		if (_this.is('.none_v')) {
+			_this.slideDown().toggleClass('none_v');
+			$(this).children('.school_v2').removeClass('text_xz90').addClass('text_xz270');
+		}else{
+			_this.slideUp().toggleClass('none_v');
+			$(this).children('.school_v2').removeClass('text_xz270').addClass('text_xz90');
+		}
+	})
+</script>
+
+
+
+</block>

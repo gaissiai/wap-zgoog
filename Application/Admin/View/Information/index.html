@@ -1,0 +1,61 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+	<style>
+		.uplode{
+			width: 80px;
+			height: 25px;
+			margin-top: 20px;
+		}
+		.disnone{
+			display: none;
+		}
+	</style>
+	<script>
+	    <?php if(!empty($_COOKIE['hint'])){
+	        echo 'alert("'.$_COOKIE['hint'].'")';
+	        cookie('hint',null);
+	    }?>
+	</script>
+    
+    <div id="PageTitle">会员信息列表</div>
+    
+	<table cellspacing="0" cellpadding="3" rules="cols" style="color:Black;background-color:White;border-color:#999999;border-width:1px;border-style:Solid;width:80%;border-collapse:collapse;">
+		<tbody>
+			<tr style="color:White;background-color:Black;font-weight:bold;" >
+				<th scope="col">id</th>
+				<th scope="col" width=60>消息类型</th>
+				<th scope="col">消息标题</th>
+				<th scope="col">消息内容</th>
+				<th scope="col" width=130>消息接收人</th>
+				<th scope="col">发送时间</th>
+			</tr>
+			<volist name="list" id="vo" key='k'>
+				<tr <if condition="($k%2 neq '')">class='true'</if> <if condition="($vo['delete'] eq '1')">style='color:#999'</if>>
+					<td><{$vo.id}></td>
+					<td><{$vo.informationtype}></td>
+					<td><{$vo.title}></td>
+					<td><{$vo.content}></td>
+					<td align="center">
+		                <a href="<{:U('cate_alter',array('recipientsid'=>$vo[id]))}>"><button>消息接收人</button></a></a>
+		            </td>
+		            <td><{$vo.departuretime}></td>
+				</tr>
+			</volist>
+			<?php if($page != "<div>    </div>"): ?>
+				<tr>
+					<td colspan=6><div id='page' style='text-align:right'><{$page}></div></td>
+				</tr>
+			<?php endif;?>
+		</tbody>
+	</table>
+	<a href="<{:U('release')}>"><button style='margin-top:20px'>发布...</button></a>
+	<script>
+
+		
+		$('.uplode').click(function(){
+			
+			$('#category').removeClass('disnone');
+			
+		})
+	</script>
+</block>

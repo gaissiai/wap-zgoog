@@ -1,0 +1,98 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+<script>
+    <?php if(!empty($_COOKIE['hint'])){
+        echo 'alert("'.$_COOKIE['hint'].'")';
+        cookie('hint',null);
+    }?>
+</script>
+	<div id="PageTitle">单品活动列表</div>
+	<table cellspacing="0" cellpadding="3" rules="cols" style="color:Black;background-color:White;border-color:#999999;border-width:1px;border-style:Solid;width:700px;border-collapse:collapse;">
+		<tbody>
+			<tr style="color:White;background-color:Black;font-weight:bold;">
+				<th>活动名称</th>
+				<th scope="col" style="width:70px;">商品编号</th>
+				<th scope="col">商品名称</th>
+				<th>商品图片</th>
+				<th>选择商品</th>
+				<th scope="col">提交</th>
+				<th scope="col" style="width:60px;">删除</th>
+			</tr>
+			
+			<volist name="list" id="vo" key='k'>
+				
+				<form action="<{:U('singleproduct_upl')}>" method="get">
+				<input type='hidden' name='id' value="<{$vo.id}>">
+				<tr  style="<?php echo $vo['currentavailable']=='0'?'background:#abc;':'';?><?php echo $vo['proble']=='0'?'background:red;':''; ?>"<if condition="($k%2 neq '')">class='true'</if>>
+					
+					<td>
+						<?php switch ($vo['id']) {
+							case '1':
+								echo '新品推荐';
+								break;
+							case '2':
+								echo '热卖推荐';
+								break;
+							case '3':
+								echo '方案推荐';
+								break;
+						}?>
+					</td>
+
+					<td><a href="<{:U('add_page',array('id'=>$vo[productid],'existence'=>'1'))}>"><{$vo.productno}></a></td>
+					<td><{$vo.productname}></td>
+					<td>
+						<img src="__PUBLIC__/<{$vo.fullurl}>150-<{$vo.imageful1}>">
+					</td>
+					<td>
+						<select name='productid' class='productno'>
+							<option value="0">不修改</option>
+							<?php foreach ($productno as $value) {
+								if($value['productno']!=$list[0]['productno'] and $value['productno']!=$list[1]['productno'] and $value['productno']!=$list[2]['productno'] and $value['productno']!=$list[3]['productno']){
+									echo "<option value=$value[id]>$value[productno]</option>";
+								}
+							}?>
+							
+						</select>
+					</td>
+					<td align="center">
+		                <a href="<{:U('cate_alter',array('id'=>$vo[id],'productcategoryname'=>$vo[productcategoryname],'productcategoryenglishname'=>$vo[productcategoryenglishname],'sequence'=>$vo[sequence]))}>"><button>修改</button></a>
+		            </td>
+		            <td align="center">
+		            	<a href="<{:U('singleproduct_currentavailable',array('id'=>$vo[id],'currentavailable'=>'1'))}>" <if condition="($vo['currentavailable'] eq '0')">style='display:block'<else/>style='display:none'</if>>上线</a>
+		            	<a href="<{:U('singleproduct_currentavailable',array('id'=>$vo[id],'currentavailable'=>'0'))}>" <if condition="($vo['currentavailable'] eq '0')">style='display:none'<else/>style='display:block'</if>>下线</a>
+		            </td>
+				</tr>
+				</form>
+			</volist>
+
+			<form action="<{:U('category_add')}>" method='get' >
+			</form>
+		</tbody>
+	</table>
+<script type="text/javascript">
+	//file加载图片
+        if(typeof FileReader==='undefined'){ 
+    	    alert("抱歉，你的浏览器不支持 FileReader"); 
+    	   $('.file').attr('disabled','disabled');
+    	}else{ 
+    	   $('.file').live('change',readFile); 
+    	} 
+    	function readFile(){ 
+    	  var file = this.files[0]; 
+    	   imgs=$(this);
+    	   if(!/image\/\w+/.test(file.type)){ 
+    	       alert("文件必须为图片！"); 
+    	       $(this).val('');
+    	       return false; 
+    	    } 
+    	   var reader = new FileReader(); 
+    	   reader.readAsDataURL(file); 
+    	   reader.onload = function(e){ 
+    	       imgs.siblings('img').attr('src',this.result);
+    	       //imgs.parent().css('display','none'); 
+    	   } 
+    	} 
+	   //@file
+</script>
+</block>

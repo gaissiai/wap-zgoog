@@ -1,0 +1,105 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+	<style>
+		.uplode{
+			width: 80px;
+			height: 25px;
+			margin-top: 20px;
+		}
+		.disnone{
+			display: none;
+		}
+	</style>
+	<script>
+	    <?php if(!empty($_COOKIE['hint'])){
+	        echo 'alert("'.$_COOKIE['hint'].'")';
+	        cookie('hint',null);
+	    }?>
+	</script>
+    
+    <div id="PageTitle">按钮管理</div>
+	<table cellspacing="0" cellpadding="3" rules="cols" style="color:Black;background-color:White;border-color:#999999;border-width:1px;border-style:Solid;width:80%;border-collapse:collapse;border:1px solid #555">
+		<tbody>
+			<tr style="color:White;background-color:Black;font-weight:bold;" >
+				<th scope="col">id</th>
+				<th scope="col" width=60>图片</th>
+				<th scope="col">排序</th>
+				<th scope="col" width=130>是否上线</th>
+				<th scope="col">地址</th>
+				<th scope="col">最后更新时间</th>
+				<th>删除</th>
+				<th>提交</th>
+			</tr>
+
+			
+
+			<volist name="list" id="vo" key='k'>
+				
+				<tr <?php echo ($k=='0'||$k%2=='') ?'style="background-color:#ddd"':''; ?>>
+					<form method="post" enctype="multipart/form-data" action="<{:U('Index/Submit')}>">
+					<input type="hidden" name='type'value="3">
+					<input type="hidden" name='id' value="<{$vo.id}>">
+					<td><{$vo.id}></td>
+					<td width="200px">
+						
+						<img width="100px" style="float:left" class="file_but"  src="__UPLOADS__/<{$vo.pic}>">
+						<input style="float:left" type="file" name='file' class='file'>
+					</td>
+
+					<td><input type="number" style="width:50px" name='sort' value="<{$vo.sort}>"></td>
+					<td>否<input type="radio"checked <?php echo $vo['is_on']=='0'?'checked':'';?> name="is_on" value="0">&nbsp;&nbsp;&nbsp;是<input type="radio" <?php echo $vo['is_on']=='1'?'checked':'';?> name="is_on" value="1"> </td>
+
+					<td><input type="text" name="link_url" value="<{$vo.link_url}>" style="width:150px"></td>
+					<td align="center">
+		               	<{$vo.updatetime}>
+		            </td>
+		            <td width="40px"><input type="checkbox" name='deleted' value="1"></td>
+		            <td><button>提交</button></td>
+		            </form>
+				</tr>
+				
+			</volist>
+
+			<tr class="add_div" style="opacity:0;">
+				<form method="post" enctype="multipart/form-data" action="<{:U('Index/Submit')}>" >
+				<input type="hidden" name='type'value="3">
+				<td></td>
+				<td width="340px">
+					
+					<input style="float:left" type="file" name='file' class='file'>
+				</td>
+				<td><input type="number" style="width:50px" name='sort' value="50"></td>
+				<td>否<input type="radio" checked  name="is_on" value="0">&nbsp;&nbsp;&nbsp;是<input type="radio" name="is_on" value="1"> </td>
+				<td><input type="text" name="link_url" value=""></td>
+	            <td width="40px"></td>
+	            <td></td>
+	            <td><button>提交</button></td>
+	            </form>
+			</tr>
+
+			<?php if($page != "<div>    </div>"): ?>
+				<tr style="border:1px solid #111">
+					<td colspan='9'><div id='page' style='text-align:right'><{$page}></div></td>
+				</tr>
+			<?php endif;?>
+		</tbody>
+	</table>
+	<br>
+	<button class="add_but">新增</button>
+	
+
+	<script type="text/javascript">
+		var add='0';
+
+		$('.add_but').click(function(){
+			if (add=='1') {
+				alert('只能逐个添加');
+				return false;
+			};
+
+			$('.add_div').css('opacity','1');
+			add='1';
+		})
+	</script>
+
+</block>

@@ -1,0 +1,297 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+<script type="text/javascript">
+    <?php if(!empty($_COOKIE['hint'])){
+        echo 'alert("'.$_COOKIE['hint'].'")';
+        cookie('hint',null);
+    }?>
+</script>
+<style type="text/css"> 
+*{ margin:0; padding:0;}
+body { color:#666; background:#fff;}
+ul,li{ list-style:none;}
+img{border:0 none;}
+/*---------------------------------------demo css--------------------------------------------*/
+.date_selector, .date_selector *{width: auto;height: auto;border: none;background: none;margin: 0;padding: 0;text-align: left;text-decoration: none;}
+.date_selector{background:#fbfbfb;border: 1px solid #ccc;padding: 10px;margin:0;margin-top:-1px;position: absolute;z-index:100000;display:none;border-radius: 3px;box-shadow: 0 0 5px #aaa;box-shadow:0 2px 2px #ccc; width:287px;}
+.date_selector_ieframe{position: absolute;z-index: 99999;display: none;}
+.date_selector .nav{width: 17.5em;}
+.date_selector .nav p{clear: none;}
+.date_selector .month_nav, .date_selector .year_nav{margin: 0 0 3px 0;padding: 0;display: block;position: relative;text-align: center;}
+.date_selector .month_nav{float: left;width: 55%;}
+.date_selector .year_nav{float: right;width: 42%;margin-right: -8px;}
+.date_selector .month_name, .date_selector .year_name{font-weight: bold;line-height: 20px;}
+.date_selector .button{display: block;position: absolute;top: 0;width:18px;height:18px;line-height:16px;font-weight:bold;color:#5985c7;text-align: center;font-size:12px;overflow:hidden;border: 1px solid #ccc;border-radius:2px;}
+.date_selector .button:hover, .date_selector .button.hover{background:#5985c7;color: #fff;cursor: pointer;border-color:#3a930d;}
+.date_selector .prev{left: 0;}
+.date_selector .next{right: 0;}
+.date_selector table{border-spacing: 0;border-collapse: collapse;clear: both;margin: 0; width:285px;}
+.date_selector th, .date_selector td{width: 2.5em;height: 2em;padding: 0 !important;text-align: center !important;color: #666;font-weight: normal;}
+.date_selector th{font-size: 12px;}
+.date_selector td{border:1px solid #f1f1f1;line-height: 2em;text-align: center;white-space: nowrap;color:#5985c7;background: #fff;}
+.date_selector td.today{background: #eee;}
+.date_selector td.unselected_month{color: #ccc;}
+.date_selector td.selectable_day{cursor: pointer;}
+.date_selector td.selected{background:#2b579a;color: #fff;font-weight: bold;}
+.date_selector td.selectable_day:hover, .date_selector td.selectable_day.hover{background:#5985c7;color: #fff;}
+/*-----------------------------------------------------------------------------------*/
+</style> 
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery.date_input.pack.js"></script> 
+<script type="text/javascript">
+$(function(){
+	$('.date_picker').date_input();
+	})
+</script>
+
+	<div id="PageTitle">商品活动列表</div>
+	<form action="<{:U('activity_add')}>" class='submit_form' method="get">
+		<!--默认数据库条数-->
+		<input type='hidden' name='activityid' value="<{$product.id}>">
+		<table>
+			<tr>
+				<td width="80">活动名称</td>
+				<td colspan="2" width=200><input style="width:200px" type="text" name='productname' value="<{$product.productname}>">
+				</td>
+			</tr>
+			<tr>
+				<td>上线</td>
+				<td><input value="1" type='checkbox' name='currentavailable' <?php echo $product['currentavailable']=='1'?'checked':'';?>></td>
+			</tr>
+			<tr class='activityproduct'>
+
+				<td>活动商品</td>
+				
+				<if condition="$activity eq ''">
+					<td width=110>
+						<input type="hidden" value="1"  class="number_id">
+						<select name='productno1' class='productno' style='float:left'>
+							<option></option>
+							<volist name='list' id='vl'>
+								<option><{$vl.productno}></option>	
+							</volist>
+						</select>
+						<br>
+						<img class='productimage' style='float:left'src="__PUBLIC__/Admin/image/Blank.jpg"  width="110" >
+						
+						<div class='name'>
+						<input class='productname' type='text' class='productname' value="" style='width:108px;margin-top:10px'  disabled='disabled'>
+						</div>
+						<div class='sku' style="float:left;width:110px">
+							<span style="font-size:15px">sku属性</span>
+							<br>
+						</div>
+						<span style="color:red">删除</span>：<input type="checkbox" class="is_del" name="isdelete1" value="1" >
+					</td>
+				</if>
+
+				<volist name='activity' id='va' key='k'>
+					<td width=110>
+						<input type="hidden" value="<{$k}>"  class="number_id">
+						<input type="hidden" value="<{$va.skuid}>" class='sku_id'>
+						<input type='hidden' name='activityid<{$k}>' value="<{$va.id}>">
+						<select name='productno<{$k}>' class='productno vaproduct<{$k}>' style='float:left'>
+							<option></option>
+							<volist name='list' id='vl'>
+								<option <?php echo $vl['productno']==$va['productno']?'selected':'';?>><{$vl.productno}></option>	
+							</volist>
+						</select>
+						<br>
+						<img class='productimage' style='float:left'src="__PUBLIC__/Admin/image/Blank.jpg"  width="110" >
+						
+						<div class='name'>
+						<input class='productname' type='text' class='productname' value="" style='width:108px;margin-top:10px'  disabled='disabled'>
+						</div>
+						<div class='sku' style="float:left;width:110px">
+							<span style="font-size:15px">sku属性</span>
+							<br>
+						</div>
+						<br>
+						<span style='color:red'>删除</span>：<input type='checkbox' class='is_del' name='isdelete<{$k}>' value="1" <?php echo $va['isdelete']=='1'?'checked':'';?> >
+					</td>
+				</volist>
+
+				<input type="hidden" name='number' class="number" value="<?php echo $k=='0'?'1':$k;?>">
+			</tr>
+		</table>
+		<div style="margin-left:40px"><a class='add_but'>添加。。。</a></div>
+		<br>
+		<div>
+			活动开始时间：<!--将disabled去除，就有活动时间-->
+			<input name='starttime' disabled style="width:226px;background: #fefefe;border: 1px solid #bbb;font-size: 14px;color: #333;padding: 7px;border-radius: 3px;" type="text" class="date_picker time1" value="<?php echo date('Y-m-d',$product['starttime'])?>">
+		</div>
+		<div>
+			活动结束时间：<!--将disabled去除，就有活动时间-->
+			<input name='endtime' disabled style="width:226px;background: #fefefe;border: 1px solid #bbb;font-size: 14px;color: #333;padding: 7px;border-radius: 3px;" type="text" class="date_picker time2" value="<?php echo date('Y-m-d',$product['endtime'])?>">
+		</div>
+		<br>
+		<span>活动积分：</span><input type="text" name='activityconversionintegral' class='activityconversionintegral' value="<{$attr.conversionintegral}>">&nbsp;<span>商品总积分：</span><span class='tegral_number'>0</span>
+		<br><br>
+		<br>
+		<span>总活动数量：</span><input type="text" name='inventory' value="<{$attr.inventory}>">&nbsp;<span>销售活动数：<{$attr.sale}></span>&nbsp;|&nbsp;<span>剩余活动数：<?php echo $attr['inventory']-$attr['sale']?></span>
+		<input type='hidden' name='attrid' value="<{$attr.id}>">
+	</form>
+	<button class='submit_but'>提交</button>
+	<br><br>
+	<span>修改详情前 先保存活动商品 <span style='color:red;font-size:15px'>*</span></span>
+	<div style='margin-top:20px'>
+		<?php for ($i=1; $i < 6; $i++){
+			if (!empty($product['imagemassive'.$i])) {
+				echo '<img src="__PUBLIC__/'.$product['imagemassive'.$i].'"><br>';
+			}
+		}?>
+		<?php echo htmlspecialchars_decode($product['description']);?>
+		<br><br>
+		<a href="<{:U('Product/add_page',array('id'=>$product['id'],'existence'=>'1'))}>"><button>修改。。。</button></a>
+	</div>
+<script>
+	var add_number=<?php echo $k==0?'1':$k;?>;//
+	var empty_activity=<?php echo $activity;?>;
+	var vj=1;
+	var count=0;
+	var skutype=''
+	if (empty_activity!='') {
+		for (var va = 1; va <= add_number; va++) {
+			_thisi=$('.vaproduct'+va);
+			var productno=_thisi.val();
+			$.ajax({
+	            type:"get",
+	            url:"<{:U('productno_sel')}>",
+	            data:{id:productno},
+	            cache:true,      
+                async:false,  
+	            success:function(data){
+	            	_this=$('.vaproduct'+vj);
+	            	var number_id=_this.siblings('.number_id').val();//标注id
+		        	_this.siblings('.sku').html('<span style="font-size:15px">sku属性</span><br>');
+		        	_this.siblings('.productimage').attr('src','__PUBLIC__/'+data['product']['fullurl']+'150-'+data['product']['imageful1']);
+		        	_this.siblings('.name').children('.productname').val(data['product']['productname']);
+		        	for (var i = 0; i < data['sku'].length; i++) {//获取skutypeid
+		        		var typename='';
+		        		for (var a = 1; a < 6; a++) {//获取skutypeid 1~5
+		        			if (data['sku'][i]['attrtypeid'+a]!='') {//循环判断
+		            			for (var b = 0; b < data['skutype'].length; b++) {
+		            				if (data['sku'][i]['attrtypeid'+a]==data['skutype'][b]['id']) {
+		            					typename+=data['product']['attroptionname'+a]+':'+data['skutype'][b]['typename']+' | ';
+		            				}
+		            			};
+		        			};
+		        		};
+		        		var skuid=data['sku'][i]['id'];
+		        		var acti=_this.siblings('.sku_id').val();
+		        		var checked_val='';
+		        		//判断是否选择，计算积分
+		        		if (acti == skuid) {
+		        			checked_val='checked';
+		        			if (!_this.siblings('.is_del').attr('checked')) {//删除是否选择
+			        			count=Number(count)+Number(data['sku'][i]['conversionintegral']);
+		        			}
+		        		};
+		        		_this.siblings('.sku').append(typename+'<div><input type="hidden" class="conversionintegral_val" value="'+data['sku'][i]['conversionintegral']+'"><input class="conversionintegral_id" type="hidden" value="'+number_id+'"><input class="radio_but" type="radio" name="skuid'+number_id+'" value="'+data['sku'][i]['id']+'"  '+checked_val+'  ></div><br>');//标记次序，存储兑换积分，用于计算总积分
+		        	};
+	            	vj++;
+	            	$('.tegral_number').html(count);
+	            }
+	         });
+		};
+	};
+
+	//提交
+	$('.submit_but').click(function(){
+		/*if ($('.time1').val()=='' || $('.time2').val()=='') {
+			alert('时间不能为空');
+			return false;
+		}
+		var time1=Date.parse(new Date($('.time1').val()));
+		var time2=Date.parse(new Date($('.time2').val()));
+		if (time1>time2) {
+			alert('时间错误');
+			return false;
+		}*/
+		if($('.activityconversionintegral').val()>$('.tegral_number').html()){
+			alert('活动积分必须小于总积分');
+			return false;
+		}
+
+		$('.submit_form').submit();
+	})
+	//添加
+	var productid=<?php echo json_encode($list);?>;
+	$('.add_but').click(function(){
+		var optionno='';
+		for (var i = 0; i < productid.length; i++) {
+			optionno += '<option>'+ productid[i]['productno'] +'</option>';
+		};
+		add_number+=1
+		$('.activityproduct').append('<td width=110><input type="hidden" value="'+add_number+'" class="number_id"><select name="productno'+add_number+'" class="productno" style="float:left"><option></option>'+optionno+'</select><br><img class="productimage" style="float:left" src="__PUBLIC__/Admin/image/Blank.jpg"  width="110" ><div class="name"><input class="productname" type="text" class="productname" style="width:108px;margin-top:10px" disabled="disabled"></div><div class="sku" style="float:left;width:110px"><span style="font-size:15px">sku属性</span><br></div><span style="color:red">删除</span>：<input type="checkbox" class="is_del" name="isdelete'+add_number+'" value="1" ></td>');
+		;
+		$('.number').val(add_number);
+	})
+	//查询商品信息
+	$('.productno').live('change',function(){
+		var productno=$(this).val();
+		if (productno=='') {
+			return false;
+		};
+		var number_id=$(this).siblings('.number_id').val();//标注id
+		_this=$(this);
+		_this.siblings('.productimage').attr('src','__PUBLIC__/Admin/image/Blank.jpg');
+		$.ajax({
+            type:"get",
+            url:"<{:U('productno_sel')}>",
+            data:{id:productno},
+            success:function(data){
+            	_this.siblings('.sku').html('<span style="font-size:15px">sku属性</span><br>');
+            	_this.siblings('.productimage').attr('src','__PUBLIC__/'+data['product']['fullurl']+'150-'+data['product']['imageful1']);
+            	_this.siblings('.name').children('.productname').val(data['product']['productname']);
+            	for (var i = 0; i < data['sku'].length; i++) {//获取skutypeid
+            		var typename='';
+            		for (var a = 1; a < 6; a++) {//获取skutypeid 1~5
+            			if (data['sku'][i]['attrtypeid'+a]!='') {//循环判断
+	            			for (var b = 0; b < data['skutype'].length; b++) {
+	            				if (data['sku'][i]['attrtypeid'+a]==data['skutype'][b]['id']) {
+	            					typename+=data['product']['attroptionname'+a]+':'+data['skutype'][b]['typename']+' | ';
+	            				}
+	            			};
+            			};
+            		};
+            		_this.siblings('.sku').append(typename+'<div><input type="hidden" class="conversionintegral_val" value="'+data['sku'][i]['conversionintegral']+'"><input class="conversionintegral_id" type="hidden" value="'+number_id+'"><input class="radio_but" type="radio" name="skuid'+number_id+'" value="'+data['sku'][i]['id']+'"></div><br>');//标记次序，存储兑换积分，用于计算总积分
+            	};
+            }
+         });
+	})
+	//获取积分
+	
+	$('.radio_but').live('click',function(){
+		var conversionintegral={};
+		$('.radio_but').each(function(){
+			if ($(this).attr('checked')) {	
+				if(!$(this).parent().parent().siblings('.is_del').attr('checked')){
+					var conversionintegral_id=$(this).siblings('.conversionintegral_id').val();
+					conversionintegral[ conversionintegral_id ]=$(this).siblings('.conversionintegral_val').val();
+				}
+			};
+		})
+		var tegral_number=0;
+		for(var key in conversionintegral){
+			tegral_number=Number(tegral_number)+Number(conversionintegral[key]);
+		}
+		$('.tegral_number').html(tegral_number);
+	})
+	$('.is_del').live('click',function(){
+		var conversionintegral={};
+		$('.radio_but').each(function(){
+			if ($(this).attr('checked')) {	
+				if(!$(this).parent().parent().siblings('.is_del').attr('checked')){
+					var conversionintegral_id=$(this).siblings('.conversionintegral_id').val();
+					conversionintegral[ conversionintegral_id ]=$(this).siblings('.conversionintegral_val').val();
+				}
+			};
+		})
+		var tegral_number=0;
+		for(var key in conversionintegral){
+			tegral_number=Number(tegral_number)+Number(conversionintegral[key]);
+		}
+		$('.tegral_number').html(tegral_number);
+	})
+</script>
+</block>

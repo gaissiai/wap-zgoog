@@ -1,0 +1,15 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+<script type="text/javascript">
+    <?php if(!empty($_COOKIE['hint'])){
+        echo 'alert("'.$_COOKIE['hint'].'")';
+        cookie('hint',null);
+    }?>
+</script>
+	<div id="PageTitle"><span id="ContentPlaceHolder1_MessageTitle">欢迎您回来，<?php echo $_SESSION['zhigong']['login']['admin']['name'];?></span></div>
+	<div style="width: 100%; padding-top: 100px; text-align: center; font-size: 16px;">
+	    <span id="ContentPlaceHolder1_MessageText">请通过左边栏的菜单来进行您需要的网站或商品管理操作。</span>
+	    <br>
+	</div>
+	<br>
+</block>

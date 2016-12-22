@@ -1,0 +1,32 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+	<script>
+		<?php if($_COOKIE['cat_error']=='1'){
+			echo 'alert("修改失败")';
+			cookie('cat_error',null);
+		}?>
+	</script>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>     
+    <div id="PageTitle">商品分类修改</div>
+    <div>
+	<table cellspacing="0" cellpadding="3" rules="cols" id="ContentPlaceHolder1_GridViewProductCategoryList" style="color:Black;background-color:White;border-color:#999999;border-width:1px;border-style:Solid;width:60%;border-collapse:collapse;">
+		<tbody>
+			<tr style="color:White;background-color:Black;font-weight:bold;">
+			<th>id</th>
+			<th scope="col">公司名称</th>
+			<th></th>
+			</tr>
+			<form action="<{:U('category_upl')}>" method="get">
+			<input type='hidden' name='id' value="<{$list.id}>">
+			<tr>
+				<td><{$list.id}></td>
+				<td><input type='text' name='logisticscompanyname' value="<{$list.logisticscompanyname}>"></td>
+				<td align="center">
+	                <button>保存</button>
+	            </td>
+			</tr>
+			</form>
+		</tbody>
+	</table>
+</block>

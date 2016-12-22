@@ -1,0 +1,63 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+<style>
+	a{
+		line-height: 
+	}
+</style>
+	<script>
+		<?php if(!empty($_COOKIE['hint'])){
+	        echo 'alert("'.$_COOKIE['hint'].'")';
+	        cookie('hint',null);
+	    }?>
+	</script>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>     
+    <div id="PageTitle">发布消息</div>
+    <div>
+	<table>
+		<span style='color:red'>*</span>消息将全员发送
+		<form action="<{:U('release_int')}>" method="post">
+			<tr>
+				<td>消息类型</td>
+				<td>
+					<select name="informationtype" >
+						<option>优惠活动</option>
+						<option>积分活动</option>
+						<option>其他</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>消息标题</th>
+				<td>
+					<input type="text" name='title'>
+				</td>
+			</tr>
+			<tr>
+				<td style="line-height:50px">消息内容</td>
+				<td>
+					<textarea name="content" rows='10' cols="30"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td><button class='qll'>提交</button></td>
+			</tr>
+		</form>
+	</table>
+	<script>
+		var all=true;
+		$('.all').click(function(){
+			if (all) {
+				$('.memberno').attr('checked',true);
+				$(this).html('取消全选');
+				all=false;
+			}else{
+				$('.memberno').attr('checked',false);
+				$(this).html('全选');
+				all=true;
+			}
+			
+		})
+	</script>
+</block>

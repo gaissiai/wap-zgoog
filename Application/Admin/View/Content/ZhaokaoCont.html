@@ -1,0 +1,73 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+
+
+	<?php dump($list);exit; ?>
+
+    <div id="PageTitle">招考资讯导航</div>
+    <div style="width:100%;height:40px">
+    	<div style="float:left"><a href="<{:U('Content/Zhaokaodet',array('type'=>'1'))}>"><button>添加顶级</button></a>&nbsp;&nbsp;</div>
+		
+	    <div style="float:left">|&nbsp;&nbsp;<a href="<{:U('Content/Zhaokaodet',array('type'=>'2'))}>"><button>添加2级</button></a></div>
+    </div>
+    
+	<table cellspacing="0" cellpadding="3" rules="cols" style="color:Black;background-color:White;border-color:#999999;border-width:1px;border-style:Solid;width:80%;border-collapse:collapse;border:1px solid #555">
+		<tbody>
+			<tr style="color:White;background-color:Black;font-weight:bold;" >
+				<th scope="col">id</th>
+				<th scope="col" width=60>层级</th>
+				<th>标题</th>
+				<th scope="col">排序</th>
+				<th scope="col" width=130>是否上线</th>
+				<th scope="col">最后更新时间</th>
+				<th>操作</th>
+			</tr>
+
+			
+
+			<volist name="data" id="vo" key='k'>
+				
+				<tr <?php echo ($k=='0'||$k%2=='') ?'style="background-color:#ddd"':''; ?>>
+					<td><{$vo.id}></td>	
+					<td>顶级</td>
+					<td><{$vo.name}></td>
+					<td><{$vo.sort}></td>
+					<td>否<input type="radio"checked <?php echo $vo['is_on']=='0'?'checked':'';?> name="is_on" value="0">&nbsp;&nbsp;&nbsp;是<input type="radio" <?php echo $vo['is_on']=='1'?'checked':'';?> name="is_on" value="1"> </td>
+					<td><{$vo.updatetime}></td>
+					
+					<td><a href="<{:U('Content/Zhaokaodet',array('type'=>'1','id'=>$vo['id']))}>"><button>编辑</button></a> / <button>删除</button></td>
+					
+				</tr>
+				
+				<?php if (!empty($vo['data'])): ?>
+
+					<?php foreach ($vo['data'] as $key => $value): ?>
+						<tr <?php echo ($k=='0'||$k%2=='') ?'style="background-color:#ddd"':''; ?>>
+							<td><{$value.id}></td>	
+							<td><{$vo.name}></td>
+							<td>--<{$value.name}></td>
+							<td><{$value.sort}></td>
+							<td>否<input type="radio"checked <?php echo $value['is_on']=='0'?'checked':'';?> name="is_on" value="0">&nbsp;&nbsp;&nbsp;是<input type="radio" <?php echo $value['is_on']=='1'?'checked':'';?> name="is_on" value="1"> </td>
+							<td><{$value.updatetime}></td>
+		
+							<td><a href="<{:U('Content/Zhaokaodet',array('type'=>'2','id'=>$value['id']))}>"><button>编辑</button></a> / <button>删除</button></td>
+						</tr>
+					<?php endforeach; ?>
+					
+				<?php endif; ?>
+			</volist>
+
+			
+
+			<?php if($page != "<div>    </div>"): ?>
+				<tr style="border:1px solid #111">
+					<td colspan='9'><div id='page' style='text-align:right'><{$page}></div></td>
+				</tr>
+			<?php endif;?>
+		</tbody>
+	</table>
+	<br>
+	<button class="add_but">新增</button>
+	
+
+</block>

@@ -1,0 +1,68 @@
+<extend name="Inherit/index" />
+<block name='whole'>
+	<style>
+		.uplode{
+			width: 80px;
+			height: 25px;
+			margin-top: 20px;
+		}
+		.disnone{
+			display: none;
+		}
+	</style>
+	<script>
+	    <?php if(!empty($_COOKIE['hint'])){
+	        echo 'alert("'.$_COOKIE['hint'].'")';
+	        cookie('hint',null);
+	    }?>
+	</script>
+    
+    <div id="PageTitle">快递公司列表</div>
+    
+	<table cellspacing="0" cellpadding="3" rules="cols" style="color:Black;background-color:White;border-color:#999999;border-width:1px;border-style:Solid;width:70%;border-collapse:collapse;">
+		<tbody>
+			<tr style="color:White;background-color:Black;font-weight:bold;">
+				<th scope="col">id</th>
+				<th scope="col">快递公司名称</th>
+				<th scope="col" style="width:60px;">编辑</th>
+				<th scope="col" style="width:60px;">删除</th>
+			</tr>
+			<volist name="list" id="vo" key='k'>
+				<tr <if condition="($k%2 neq '')">class='true'</if> <if condition="($vo['delete'] eq '1')">style='color:#999'</if>>
+					<td><{$vo.id}></td>
+					<td><{$vo.logisticscompanyname}></td>
+					
+					<td align="center">
+		                <a href="<{:U('cate_alter',array('id'=>$vo[id]))}>"><button>修改</button></a>
+		            </td>
+		            <td align="center">
+		            	<a href="<{:U('category_recovery',array('id'=>$vo[id]))}>" <if condition="($vo['isdelete'] eq '1')">style='display:block'<else/>style='display:none'</if>><button>恢复</button></a>
+		            	<a href="<{:U('category_del',array('id'=>$vo[id]))}>" <if condition="($vo['isdelete'] eq '1')">style='display:none'<else/>style='display:block'</if>><button style='color:red'>删除</button></a>
+		            </td>
+				</tr>
+			</volist>
+
+			<form action="<{:U('category_add')}>" method='get' >
+				<tr id='category' class='disnone' <if condition="(($k+1)%2 neq '')">style='background:#CCCCCC;'</if>>
+					<td><?php echo $k+1;?></td>
+					<td><input type='text' name='logisticscompanyname'></td>
+					<td align="center">
+		                <a><button>提交</button></a>
+		            </td>
+		            <td>
+		            </td>
+				</tr>
+			</form>
+		</tbody>
+	</table>
+	<a><button class='uplode'>添加...</button></a>
+	<script>
+
+		
+		$('.uplode').click(function(){
+			
+			$('#category').removeClass('disnone');
+			
+		})
+	</script>
+</block>
